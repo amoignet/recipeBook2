@@ -11,29 +11,36 @@ import { Recipe } from './recipe.model';
 export class RecipeService {
 
   recipesChanged = new Subject<Recipe[]>();
+  private recipes: Recipe[] = [];
 
-  private recipes: Recipe[] = [
-    new Recipe(
-      'Tarte au poireaux',
-      'La reine des tartes',
-      'https://assets.afcdn.com/recipe/20160325/58176_w1000h667c1cx2808cy1872.webp',
-      [
-        new Ingredient('Poireaux', 3),
-        new Ingredient('Lardons', 400),
-        new Ingredient('Oeufs', 3),
-      ]),
-    new Recipe(
-      'Gnocchi',
-      'Ne se prononce pas "nio-chi"',
-      'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg',
-      [
-        new Ingredient('Gnocchi', 350),
-        new Ingredient('Sauce tomates', 250),
-        new Ingredient('Fromage rapée', 150)
-      ])
-  ];
+  // private recipes: Recipe[] = [
+  //   new Recipe(
+  //     'Tarte au poireaux',
+  //     'La reine des tartes',
+  //     'https://assets.afcdn.com/recipe/20160325/58176_w1000h667c1cx2808cy1872.webp',
+  //     [
+  //       new Ingredient('Poireaux', 3),
+  //       new Ingredient('Lardons', 400),
+  //       new Ingredient('Oeufs', 3),
+  //     ]),
+  //   new Recipe(
+  //     'Gnocchi',
+  //     'Ne se prononce pas "nio-chi"',
+  //     'https://images.immediate.co.uk/production/volatile/sites/30/2020/08/chorizo-mozarella-gnocchi-bake-cropped-9ab73a3.jpg',
+  //     [
+  //       new Ingredient('Gnocchi', 350),
+  //       new Ingredient('Sauce tomates', 250),
+  //       new Ingredient('Fromage rapée', 150)
+  //     ])
+  // ];
+
 
   constructor(private slService: ShoppingListService) { }
+
+  setRecipes(recipes: Recipe[]): void {
+    this.recipes = recipes;
+    this.recipesChanged.next(this.recipes.slice());
+  }
 
   getRecipes(): Recipe[] {
     return this.recipes.slice();
